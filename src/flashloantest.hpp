@@ -25,10 +25,6 @@
 #define EOS_CONTRACT_CODE "eosio.token"_n
 #define FLASH_LOAN_CODE "flashloan.tp"_n
 #endif
-#define STOP 1
-
-#define START 0
-#define TYPE_DEPOSIT "deposit"
 
 using namespace eosio;
 using namespace std;
