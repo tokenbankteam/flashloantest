@@ -61,6 +61,9 @@ namespace tpflashloantest {
         [[eosio::action]]
         void testfloan(eosio::asset quantity);
 
+        [[eosio::action]]
+        void testffloan(eosio::asset quantity);
+
     private:
         // code is token contract account, then scope is account
         struct [[eosio::table, eosio::contract("eosio.token")]] account {
@@ -102,6 +105,6 @@ namespace tpflashloantest {
                 } \
             } \
 
-EOSIO_DISPATCH_EX(tpflashloantest::flashloantest, (transfer)(testfloan))
+EOSIO_DISPATCH_EX(tpflashloantest::flashloantest, (transfer)(testfloan)(testffloan))
 
 #endif //WORK_FLASHLOANTEST_H
