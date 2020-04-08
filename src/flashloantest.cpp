@@ -30,7 +30,7 @@ void flashloantest::transfer(name from, name to, asset quantity, string memo) {
         //TODO BUSINESS
 //        check(false, "go here");
 
-        auto pay_quantity = asset{int64_t(quantity.amount * (1 + 1)), quantity.symbol};
+        auto pay_quantity = asset{int64_t((1 + 0.01) * quantity.amount), quantity.symbol};
         action{
                 permission_level{_self, "active"_n},
                 _code,
