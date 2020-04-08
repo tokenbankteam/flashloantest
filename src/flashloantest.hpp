@@ -20,7 +20,7 @@
 #define TEST 1
 #if TEST
 #define EOS_CONTRACT_CODE "eosio.token"_n
-#define FLASH_LOAN_CODE "flashloan221"_n
+#define FLASH_LOAN_CODE "flashloan223"_n
 #else
 #define EOS_CONTRACT_CODE "eosio.token"_n
 #define FLASH_LOAN_CODE "flashloan.tp"_n
