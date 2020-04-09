@@ -35,7 +35,7 @@ void flashloantest::transfer(name from, name to, asset quantity, string memo) {
                 permission_level{_self, "active"_n},
                 _code,
                 "transfer"_n,
-                std::make_tuple(_self, FLASH_LOAN_CODE, pay_quantity, std::string("payback:"))
+                std::make_tuple(_self, FLASH_LOAN_CODE, pay_quantity, std::string("repay:"))
         }.send();
         return;
     }
