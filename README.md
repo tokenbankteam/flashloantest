@@ -7,7 +7,7 @@
 
 ## 编译
 
-#### 1. 将flashloantest目录放入eosio.contracts内。
+#### 1. 将flashloantest目录放入eosio.contracts内，跟eosio.token同级即可。
 #### 2. 编辑文件 eosio.contracts/CMakeLists.txt:
 
 ```
