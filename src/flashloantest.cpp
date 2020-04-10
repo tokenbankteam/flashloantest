@@ -50,6 +50,24 @@ void flashloantest::testfloan(asset quantity) {
     }.send();
 }
 
+void flashloantest::testfloant(asset quantity) {
+    action{
+            permission_level{_self, "active"_n},
+            FLASH_LOAN_CODE,
+            "floan"_n,
+            std::make_tuple(TPT_CONTRACT_CODE, quantity, _self)
+    }.send();
+}
+
+void flashloantest::testffloant(asset quantity) {
+    action{
+            permission_level{_self, "active"_n},
+            FLASH_LOAN_CODE,
+            "floan"_n,
+            std::make_tuple(uint64_t(1), quantity, _self)
+    }.send();
+}
+
 void flashloantest::testffloan(asset quantity) {
     action{
             permission_level{_self, "active"_n},
