@@ -1,3 +1,7 @@
+# flashloantest 介绍
+
+flash loan on EOS network, you can loan eos in one transaction without collateral. here are some flash loan test units
+
 # flashloantest编译部署
 
 ## 依赖环境
@@ -7,7 +11,7 @@
 
 ## 编译
 
-#### 1. 将flashloantest目录放入eosio.contracts内。
+#### 1. 将flashloantest目录放入eosio.contracts内，跟eosio.token同级即可。
 #### 2. 编辑文件 eosio.contracts/CMakeLists.txt:
 
 ```
