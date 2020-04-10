@@ -20,7 +20,7 @@
 #define TEST 1
 #if TEST
 #define EOS_CONTRACT_CODE "eosio.token"_n
-#define FLASH_LOAN_CODE "flashloan223"_n
+#define FLASH_LOAN_CODE "flashloana25"_n
 #else
 #define EOS_CONTRACT_CODE "eosio.token"_n
 #define FLASH_LOAN_CODE "flashloan.tp"_n
@@ -60,6 +60,9 @@ namespace tpflashloantest {
 
         [[eosio::action]]
         void testfloan(eosio::asset quantity);
+
+        [[eosio::action]]
+        void testffloan(eosio::asset quantity);
 
     private:
         // code is token contract account, then scope is account
@@ -102,6 +105,6 @@ namespace tpflashloantest {
                 } \
             } \
 
-EOSIO_DISPATCH_EX(tpflashloantest::flashloantest, (transfer)(testfloan))
+EOSIO_DISPATCH_EX(tpflashloantest::flashloantest, (transfer)(testfloan)(testffloan))
 
 #endif //WORK_FLASHLOANTEST_H
