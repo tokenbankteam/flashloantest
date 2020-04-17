@@ -41,30 +41,12 @@ void flashloantest::transfer(name from, name to, asset quantity, string memo) {
     }
 }
 
-void flashloantest::testfloan(asset quantity) {
+void flashloantest::testfloan(eosio::name code, asset quantity) {
     action{
             permission_level{_self, "active"_n},
             FLASH_LOAN_CODE,
             "floan"_n,
-            std::make_tuple(EOS_CONTRACT_CODE, quantity, _self)
-    }.send();
-}
-
-void flashloantest::testfloant(asset quantity) {
-    action{
-            permission_level{_self, "active"_n},
-            FLASH_LOAN_CODE,
-            "floan"_n,
-            std::make_tuple(TPT_CONTRACT_CODE, quantity, _self)
-    }.send();
-}
-
-void flashloantest::testffloant(asset quantity) {
-    action{
-            permission_level{_self, "active"_n},
-            FLASH_LOAN_CODE,
-            "floan"_n,
-            std::make_tuple(uint64_t(1), quantity, _self)
+            std::make_tuple(code, quantity, _self)
     }.send();
 }
 
@@ -75,6 +57,15 @@ void flashloantest::testffloan(asset quantity) {
             "ffloan"_n,
             std::make_tuple(uint64_t(0), quantity, _self)
     }.send();
+}
+
+void flashloantest::flashloan() {
+    buy_order_t buy_order(NEWDEX_PUBLIC_CODE, 235);
+    auto idx = buy_order.get_index<"byprice"_n>();
+    auto begin_it = idx.begin();
+    if (begin_it != idx.end()) {
+        check(false, "go here");
+    }
 }
 
 flashloantest::~flashloantest() {

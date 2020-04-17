@@ -27,6 +27,12 @@
 #define FLASH_LOAN_CODE "flashloan.tp"_n
 #endif
 
+#define INT_BUY_LIMIT 1
+#define INT_BUY_MARKET 3
+#define INT_SELL_LIMIT 2
+#define INT_SELL_MARKET 4
+#define NEWDEX_PUBLIC_CODE "newdexpublic"_n
+
 using namespace eosio;
 using namespace std;
 
@@ -60,16 +66,13 @@ namespace tpflashloantest {
         void transfer(eosio::name from, eosio::name to, eosio::asset quantity, std::string memo);
 
         [[eosio::action]]
-        void testfloan(eosio::asset quantity);
+        void testfloan(eosio::name code, eosio::asset quantity);
 
         [[eosio::action]]
         void testffloan(eosio::asset quantity);
 
         [[eosio::action]]
-        void testfloant(eosio::asset quantity);
-
-        [[eosio::action]]
-        void testffloant(eosio::asset quantity);
+        void flashloan();
 
     private:
         // code is token contract account, then scope is account
@@ -81,6 +84,51 @@ namespace tpflashloantest {
 
         typedef eosio::multi_index<"accounts"_n, account> accounts_table;
 
+        struct [[eosio::table]]  order {
+            uint64_t order_id;                  //order ID
+            uint64_t pair_id;                    //pair ID
+            uint8_t type;                          //order type, 1:limit-buy  2:limit-sell  3:market-buy  4:market-sell
+            name owner;
+            time_point_sec placed_time;
+            asset remain_quantity;
+            asset remain_convert;
+            double price;
+            name contract;                        // token contract
+            uint8_t count;                         //transfer count
+            uint8_t crosschain;                  // is crosschain
+            uint64_t ext1;
+            string extstr;
+
+            uint64_t primary_key() const { return order_id; }
+
+            uint128_t get_price() const {
+                uint64_t max = 1000000000000;
+                if (type == INT_BUY_LIMIT || type == INT_BUY_MARKET) {
+                    uint128_t high = (uint128_t)(max * price);
+                    uint64_t low = max - placed_time.utc_seconds;
+                    uint128_t price128 = (high << 64) + low;
+                    return price128;
+                } else {
+                    return (uint128_t)(max * price);
+                }
+            }
+
+            uint64_t get_name() const { return owner.value; }
+
+            EOSLIB_SERIALIZE( order, (order_id)(pair_id)(type)(owner)(placed_time)(remain_quantity)(remain_convert)(
+                    price)(contract)(count)(crosschain)(ext1)(extstr)
+            )
+        };
+
+        typedef eosio::multi_index<"buyorder"_n, order,
+                indexed_by<"byprice"_n, const_mem_fun < order, uint128_t, &order::get_price> >,
+        indexed_by<"byname"_n, const_mem_fun<order, uint64_t, &order::get_name> > >
+        buy_order_t;
+
+        typedef eosio::multi_index<"sellorder"_n, order,
+                indexed_by<"byprice"_n, const_mem_fun < order, uint128_t, &order::get_price> >,
+        indexed_by<"byname"_n, const_mem_fun<order, uint64_t, &order::get_name> > >
+        sell_order_t;
     private:
         static std::vector <std::string> &
         split(const std::string &s, const std::string delim, std::vector <std::string> &result);
@@ -112,6 +160,6 @@ namespace tpflashloantest {
                 } \
             } \
 
-EOSIO_DISPATCH_EX(tpflashloantest::flashloantest, (transfer)(testfloan)(testffloan)(testfloant)(testffloant))
+EOSIO_DISPATCH_EX(tpflashloantest::flashloantest, (transfer)(testfloan)(testffloan))
 
 #endif //WORK_FLASHLOANTEST_H
