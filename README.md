@@ -38,6 +38,10 @@ cleos -u 'http://kylin.meet.one:8888' set contract flashloan22t ./flashloantest 
 cleos -u 'http://kylin.meet.one:8888' push action eosio.token transfer '["tokenfletest", "flashloana25", "10.0000 EOS", "deposit:1"]' -p tokenfletest
 cleos -u 'http://kylin.meet.one:8888' push action eosio.token transfer '["tokenfletes1", "flashloana25", "3.0000 EOS", "deposit:1"]' -p tokenfletes1
 ```
+## 红利
+```
+cleos -u 'http://kylin.meet.one:8888' push action eosio.token transfer '["tokenfletest", "flashloana25", "10.0000 EOS", "bonus:1"]' -p tokenfletest
+```
 ## 赎回
 ```
 cleos -u 'http://kylin.meet.one:8888' get currency balance flashloant25 tokenfletest TEOS
