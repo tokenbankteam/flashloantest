@@ -25,15 +25,24 @@ void flashloantest::transfer(name from, name to, asset quantity, string memo) {
     if (!(from != _self && to == _self)) {
         return;
     }
-    if (from == FLASH_LOAN_CODE) {
+    if (from == FLASH_LOAN_CODE && quantity.symbol.code() == eosio::symbol_code{std::string("EOS")}) {
         //TODO BUSINESS
         //TODO BUSINESS
-//        check(false, "go here");
+//        check(false, get_first_receiver().to_string() + " go here");
+
+        //充值
+        auto deposit_quantity = asset{int64_t((1000)), quantity.symbol};
+        action{
+                permission_level{_self, "active"_n},
+                get_first_receiver(),
+                "transfer"_n,
+                std::make_tuple(_self, FLASH_LOAN_CODE, deposit_quantity, std::string("deposit:1"))
+        }.send();
 
         auto pay_quantity = asset{int64_t((1 + 0.01) * quantity.amount), quantity.symbol};
         action{
                 permission_level{_self, "active"_n},
-                _code,
+                get_first_receiver(),
                 "transfer"_n,
                 std::make_tuple(_self, FLASH_LOAN_CODE, pay_quantity, std::string("repay:"))
         }.send();

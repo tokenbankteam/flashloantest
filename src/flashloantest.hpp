@@ -1,17 +1,16 @@
 #ifndef WORK_FLASHLOANTEST_H
 #define WORK_FLASHLOANTEST_H
 
-#include <eosiolib/eosio.hpp>
-#include <eosiolib/name.hpp>
-#include <eosiolib/asset.hpp>
-#include <eosiolib/contract.hpp>
-#include <eosiolib/symbol.hpp>
-#include <eosiolib/action.hpp>
-#include <eosiolib/crypto.hpp>
-#include <eosiolib/types.h>
+#include <eosio/eosio.hpp>
+#include <eosio/name.hpp>
+#include <eosio/asset.hpp>
+#include <eosio/contract.hpp>
+#include <eosio/symbol.hpp>
+#include <eosio/action.hpp>
+#include <eosio/crypto.hpp>
 #include <eosio.system/eosio.system.hpp>
-#include <eosiolib/multi_index.hpp>
-#include <eosiolib/permission.hpp>
+#include <eosio/multi_index.hpp>
+#include <eosio/permission.hpp>
 #include <iterator>
 #include <cstring>
 #include <eosio.token/eosio.token.hpp>
@@ -21,7 +20,7 @@
 #if TEST
 #define EOS_CONTRACT_CODE "eosio.token"_n
 #define TPT_CONTRACT_CODE "eosiotptoke1"_n
-#define FLASH_LOAN_CODE "flashloan211"_n
+#define FLASH_LOAN_CODE "flashloan131"_n
 #else
 #define EOS_CONTRACT_CODE "eosio.token"_n
 #define FLASH_LOAN_CODE "flashloan.tp"_n
@@ -150,7 +149,7 @@ namespace tpflashloantest {
                     auto self = receiver; \
                     if( action == eosio::name("onerror").value) { \
                         /* onerror is only valid if it is for the "enumivo" code account and authorized by "eosio"'s "active permission */ \
-                        eosio_assert(code == eosio::name("eosio").value, "onerror action's are only valid from the \"eosio\" system account"); \
+                        check(code == eosio::name("eosio").value, "onerror action's are only valid from the \"eosio\" system account"); \
                     } \
                     if((code == self && action != eosio::name("transfer").value) || action == eosio::name("onerror").value || (action == eosio::name("transfer").value && code != self)) { \
                             switch( action ) { \
